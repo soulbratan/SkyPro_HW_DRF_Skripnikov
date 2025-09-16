@@ -8,6 +8,4 @@ app_name = UsersConfig.name
 router = SimpleRouter()
 router.register("", UserViewSet)
 
-urlpatterns = [
-
-    ] + router.urls
+urlpatterns = [] + router.urls

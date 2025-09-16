@@ -1,0 +1,254 @@
+{
+	"info": {
+		"_postman_id": "010e3324-aa0e-4d8f-a18e-0e7271df9ef9",
+		"name": "HW30_Generic_ViewSet",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+		"_exporter_id": "47857259"
+	},
+	"item": [
+		{
+			"name": "Get_Course",
+			"protocolProfileBehavior": {
+				"disableBodyPruning": true
+			},
+			"request": {
+				"method": "GET",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "{{baseURL}}/lms/course/",
+					"host": [
+						"{{baseURL}}"
+					],
+					"path": [
+						"lms",
+						"course",
+						""
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Post_Course",
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n    \"title\": \"Математика\",\r\n    \"description\": \"Курс по математике\"\r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "{{baseURL}}/lms/course/",
+					"host": [
+						"{{baseURL}}"
+					],
+					"path": [
+						"lms",
+						"course",
+						""
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Post_Course Copy",
+			"request": {
+				"method": "PATCH",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n    \"title\": \"Математика2\",\r\n    \"description\": \"Курс 2 по математике\"\r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "{{baseURL}}/lms/course/1/",
+					"host": [
+						"{{baseURL}}"
+					],
+					"path": [
+						"lms",
+						"course",
+						"1",
+						""
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Post_Course Copy 2",
+			"request": {
+				"method": "DELETE",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "{{baseURL}}/lms/course/1/",
+					"host": [
+						"{{baseURL}}"
+					],
+					"path": [
+						"lms",
+						"course",
+						"1",
+						""
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Get_Lesson",
+			"protocolProfileBehavior": {
+				"disableBodyPruning": true
+			},
+			"request": {
+				"method": "GET",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "{{baseURL}}/lms/lesson/",
+					"host": [
+						"{{baseURL}}"
+					],
+					"path": [
+						"lms",
+						"lesson",
+						""
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Post_Lesson",
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n    \"title\": \"Математика\",\r\n    \"description\": \"Урок по математике\"\r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "{{baseURL}}/lms/lesson/create/",
+					"host": [
+						"{{baseURL}}"
+					],
+					"path": [
+						"lms",
+						"lesson",
+						"create",
+						""
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Post_Lesson",
+			"request": {
+				"method": "PUT",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n    \"title\": \"Математика2\",\r\n    \"description\": \"Урок 2 по математике\"\r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "{{baseURL}}/lms/lesson/1/update/",
+					"host": [
+						"{{baseURL}}"
+					],
+					"path": [
+						"lms",
+						"lesson",
+						"1",
+						"update",
+						""
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Post_Lesson",
+			"request": {
+				"method": "DELETE",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "{{baseURL}}/lms/lesson/1/delete/",
+					"host": [
+						"{{baseURL}}"
+					],
+					"path": [
+						"lms",
+						"lesson",
+						"1",
+						"delete",
+						""
+					]
+				}
+			},
+			"response": []
+		}
+	],
+	"variable": [
+		{
+			"key": "baseURL",
+			"value": "",
+			"type": "default"
+		}
+	]
+}
