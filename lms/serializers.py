@@ -25,4 +25,3 @@ class CourseSerializer(ModelSerializer):
     def get_lessons_count(self, obj):
         """Метод для получения количества уроков в курсе"""
         return obj.lesson_set.count()
-
