@@ -16,6 +16,7 @@ class CourseSerializer(ModelSerializer):
     """Сериализатор для курса"""
 
     lessons_count = SerializerMethodField()
+    lessons = LessonSerializer(many=True, read_only=True, source="lesson_set")
 
     class Meta:
         model = Course
