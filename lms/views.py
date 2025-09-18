@@ -1,5 +1,6 @@
 from django.shortcuts import render
 from rest_framework import generics, viewsets
+from rest_framework.permissions import IsAuthenticated
 
 from lms.models import Course, Lesson
 from lms.serializers import CourseSerializer, LessonSerializer
@@ -29,6 +30,7 @@ class LessonCreateAPIView(generics.CreateAPIView):
 
     queryset = Lesson.objects.all()
     serializer_class = LessonSerializer
+    permission_classes = [IsAuthenticated, ~IsModer]
 
     def perform_create(self, serializer):
         lesson = serializer.save()
@@ -41,6 +43,7 @@ class LessonRetrieveAPIView(generics.RetrieveAPIView):
 
     serializer_class = LessonSerializer
     queryset = Lesson.objects.all()
+    permission_classes = [IsAuthenticated, IsModer]
 
 
 class LessonListAPIView(generics.ListAPIView):
@@ -48,6 +51,7 @@ class LessonListAPIView(generics.ListAPIView):
 
     serializer_class = LessonSerializer
     queryset = Lesson.objects.all()
+    permission_classes = [IsAuthenticated, IsModer]
 
 
 class LessonUpdateAPIView(generics.UpdateAPIView):
@@ -55,9 +59,11 @@ class LessonUpdateAPIView(generics.UpdateAPIView):
 
     serializer_class = LessonSerializer
     queryset = Lesson.objects.all()
+    permission_classes = [IsAuthenticated, IsModer]
 
 
 class LessonDestroyAPIView(generics.DestroyAPIView):
     """Контроллер для удаления урока"""
 
     queryset = Lesson.objects.all()
+    permission_classes = [IsAuthenticated, ~IsModer]
