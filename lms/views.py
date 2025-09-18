@@ -27,12 +27,16 @@ class CourseViewSet(viewsets.ModelViewSet):
             self.permission_classes = (~IsModer | IsOwner,)
         return super().get_permissions()
 
+
 class LessonCreateAPIView(generics.CreateAPIView):
     """Контроллер для создания урока"""
 
     queryset = Lesson.objects.all()
     serializer_class = LessonSerializer
-    permission_classes = [IsAuthenticated, ~IsModer,]
+    permission_classes = [
+        IsAuthenticated,
+        ~IsModer,
+    ]
 
     def perform_create(self, serializer):
         lesson = serializer.save()
@@ -45,7 +49,10 @@ class LessonRetrieveAPIView(generics.RetrieveAPIView):
 
     serializer_class = LessonSerializer
     queryset = Lesson.objects.all()
-    permission_classes = [IsAuthenticated, IsModer | IsOwner,]
+    permission_classes = [
+        IsAuthenticated,
+        IsModer | IsOwner,
+    ]
 
 
 class LessonListAPIView(generics.ListAPIView):
@@ -53,7 +60,10 @@ class LessonListAPIView(generics.ListAPIView):
 
     serializer_class = LessonSerializer
     queryset = Lesson.objects.all()
-    permission_classes = [IsAuthenticated, IsModer | IsOwner,]
+    permission_classes = [
+        IsAuthenticated,
+        IsModer | IsOwner,
+    ]
 
 
 class LessonUpdateAPIView(generics.UpdateAPIView):
@@ -61,11 +71,17 @@ class LessonUpdateAPIView(generics.UpdateAPIView):
 
     serializer_class = LessonSerializer
     queryset = Lesson.objects.all()
-    permission_classes = [IsAuthenticated, IsModer | IsOwner,]
+    permission_classes = [
+        IsAuthenticated,
+        IsModer | IsOwner,
+    ]
 
 
 class LessonDestroyAPIView(generics.DestroyAPIView):
     """Контроллер для удаления урока"""
 
     queryset = Lesson.objects.all()
-    permission_classes = [IsAuthenticated, ~IsModer | IsOwner,]
+    permission_classes = [
+        IsAuthenticated,
+        ~IsModer | IsOwner,
+    ]
