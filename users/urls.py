@@ -1,22 +1,32 @@
-from rest_framework.routers import SimpleRouter
+from rest_framework_simplejwt.views import TokenObtainPairView, TokenRefreshView
+
 from users.views import (
-    UserViewSet,
     PaymentCreateAPIView,
     PaymentRetrieveAPIView,
-    PaymentListAPIView,
+    PaymentListAPIView, UserCreateAPIView, UserRetrieveAPIView, UserListAPIView, UserUpdateAPIView, UserDestroyAPIView,
 )
 from django.urls import path
 from users.apps import UsersConfig
 
 app_name = UsersConfig.name
 
-router_user = SimpleRouter()
-router_user.register("", UserViewSet)
 
 urlpatterns = [
+    # payment
     path("payment/create/", PaymentCreateAPIView.as_view(), name="payment-create"),
     path(
         "payment/<int:pk>/", PaymentRetrieveAPIView.as_view(), name="payment-retrieve"
     ),
     path("payment/", PaymentListAPIView.as_view(), name="payment-list"),
-] + router_user.urls
+
+    # users_token
+    path('login/', TokenObtainPairView.as_view(), name='login'),
+    path('login/refresh/', TokenRefreshView.as_view(), name='login_refresh'),
+
+    # users
+    path("register/", UserCreateAPIView.as_view(), name="user-create"),
+    path('<int:pk>/', UserRetrieveAPIView.as_view(), name='user-retrieve'),
+    path('', UserListAPIView.as_view(), name='user-list'),
+    path('<int:pk>/update/', UserUpdateAPIView.as_view(), name='user-update'),
+    path('<int:pk>/delete/', UserDestroyAPIView.as_view(), name='user-delete'),
+]
