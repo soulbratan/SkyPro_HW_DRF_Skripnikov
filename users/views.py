@@ -1,10 +1,11 @@
 from django_filters import rest_framework as filters
 from rest_framework import generics
 from rest_framework.filters import OrderingFilter
-from rest_framework.permissions import AllowAny
+from rest_framework.permissions import AllowAny, IsAuthenticated
 
 from users.models import Payment, User
-from users.serializers import PaymentSerializer, UserSerializer
+from users.permissions import IsOwnerOrReadOnly
+from users.serializers import PaymentSerializer, UserSerializer, PublicUserSerializer
 
 
 class PaymentCreateAPIView(generics.CreateAPIView):
@@ -40,19 +41,27 @@ class UserCreateAPIView(generics.CreateAPIView):
 
 
 class UserRetrieveAPIView(generics.RetrieveAPIView):
-    serializer_class = UserSerializer
     queryset = User.objects.all()
+    permission_classes = (IsAuthenticated, IsOwnerOrReadOnly)
+
+    def get_serializer_class(self):
+        if self.request.user == self.get_object():
+            return UserSerializer
+        return PublicUserSerializer
 
 
 class UserListAPIView(generics.ListAPIView):
-    serializer_class = UserSerializer
+    serializer_class = PublicUserSerializer
     queryset = User.objects.all()
+    permission_classes = (IsAuthenticated,)
 
 
 class UserUpdateAPIView(generics.UpdateAPIView):
     serializer_class = UserSerializer
     queryset = User.objects.all()
+    permission_classes = (IsAuthenticated, IsOwnerOrReadOnly)
 
 
 class UserDestroyAPIView(generics.DestroyAPIView):
     queryset = User.objects.all()
+    permission_classes = (IsAuthenticated, IsOwnerOrReadOnly)
