@@ -2,7 +2,7 @@ from django.urls import reverse
 from rest_framework import status
 from rest_framework.test import APITestCase
 
-from lms.models import Lesson, Course, Subscription
+from lms.models import Course, Lesson
 from users.models import User
 
 
@@ -182,9 +182,7 @@ class SubscriptionTestCase(APITestCase):
 
     def test_subscription(self):
         url = reverse("lms:subscriptions")
-        data = {
-            "course_id": self.course.pk
-        }
+        data = {"course_id": self.course.pk}
 
         resp_st_code = []
         result = []
@@ -195,8 +193,20 @@ class SubscriptionTestCase(APITestCase):
             result.append(response.json())
 
         self.assertEqual(resp_st_code[0], status.HTTP_201_CREATED)
-        self.assertEqual(result[0].get('message'), 'подписка добавлена')
+        self.assertEqual(result[0].get("message"), "подписка добавлена")
 
         self.assertEqual(resp_st_code[1], status.HTTP_200_OK)
-        self.assertEqual(result[1].get('message'), 'подписка удалена')
+        self.assertEqual(result[1].get("message"), "подписка удалена")
 
+    def test_subscription_list(self):
+        url = reverse("lms:my-subscriptions")
+        url_2 = reverse("lms:subscriptions")
+        data = {"course_id": self.course.pk}
+
+        response = self.client.get(url)
+        self.assertEqual(len(response.json()), 0)
+
+        self.client.post(url_2, data)
+        response = self.client.get(url)
+
+        self.assertEqual(len(response.json()), 1)

@@ -1,5 +1,5 @@
 from django.shortcuts import get_object_or_404
-from rest_framework import generics, viewsets, status, response, views
+from rest_framework import generics, response, status, views, viewsets
 from rest_framework.permissions import IsAuthenticated
 
 from lms.models import Course, Lesson, Subscription
