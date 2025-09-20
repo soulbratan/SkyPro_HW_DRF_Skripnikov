@@ -75,3 +75,34 @@ class Lesson(models.Model):
 
     def __str__(self):
         return self.title
+
+
+class Subscription(models.Model):
+    """Модель подписки на обновления курса"""
+
+    user = models.ForeignKey(
+        settings.AUTH_USER_MODEL,
+        on_delete=models.CASCADE,
+        verbose_name="Пользователь",
+    )
+    course = models.ForeignKey(
+        Course,
+        on_delete=models.CASCADE,
+        verbose_name="Курс",
+    )
+    created_at = models.DateTimeField(
+        auto_now_add=True,
+        verbose_name="Дата создания подписки"
+    )
+    is_active = models.BooleanField(
+        default=True,
+        verbose_name="Подписка активна"
+    )
+
+    class Meta:
+        verbose_name = "Подписка"
+        verbose_name_plural = "Подписки"
+        unique_together = ['user', 'course']  # Уникальная пара пользователь-курс
+
+    def __str__(self):
+        return f"{self.user} - {self.course} ({'активна' if self.is_active else 'неактивна'})"
