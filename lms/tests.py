@@ -146,7 +146,6 @@ class CourseTestCase(APITestCase):
         url = reverse("lms:course-list")
         response = self.client.get(url)
         data = response.json()
-        print(data)
 
         result = {
             "count": 1,
@@ -168,3 +167,36 @@ class CourseTestCase(APITestCase):
 
         self.assertEqual(response.status_code, status.HTTP_200_OK)
         self.assertEqual(data, result)
+
+
+class SubscriptionTestCase(APITestCase):
+
+    def setUp(self):
+        self.user = User.objects.create(
+            email="admin2@example.com",
+        )
+        self.course = Course.objects.create(
+            title="TEST2", description="test2", owner=self.user
+        )
+        self.client.force_authenticate(user=self.user)
+
+    def test_subscription(self):
+        url = reverse("lms:subscriptions")
+        data = {
+            "course_id": self.course.pk
+        }
+
+        resp_st_code = []
+        result = []
+
+        for i in range(2):
+            response = self.client.post(url, data)
+            resp_st_code.append(response.status_code)
+            result.append(response.json())
+
+        self.assertEqual(resp_st_code[0], status.HTTP_201_CREATED)
+        self.assertEqual(result[0].get('message'), 'подписка добавлена')
+
+        self.assertEqual(resp_st_code[1], status.HTTP_200_OK)
+        self.assertEqual(result[1].get('message'), 'подписка удалена')
+
