@@ -1,9 +1,9 @@
-from django.shortcuts import render
-from rest_framework import generics, viewsets
+from django.shortcuts import get_object_or_404
+from rest_framework import generics, viewsets, status, response, views
 from rest_framework.permissions import IsAuthenticated
 
-from lms.models import Course, Lesson
-from lms.serializers import CourseSerializer, LessonSerializer
+from lms.models import Course, Lesson, Subscription
+from lms.serializers import CourseSerializer, LessonSerializer, SubscriptionSerializer
 from users.permissions import IsModer, IsOwner
 
 
@@ -95,3 +95,63 @@ class LessonDestroyAPIView(generics.DestroyAPIView):
         IsAuthenticated,
         ~IsModer | IsOwner,
     ]
+
+
+class SubscriptionAPIView(views.APIView):
+    """APIView для управления подписками на курсы"""
+
+    permission_classes = [IsAuthenticated]
+
+    def post(self, request, *args, **kwargs):
+        user = request.user
+        course_id = request.data.get('course_id')
+
+        if not course_id:
+            return response.Response(
+                {"error": "course_id обязателен"},
+                status=status.HTTP_400_BAD_REQUEST
+            )
+
+        course_item = get_object_or_404(Course, id=course_id)
+
+        # Ищем подписку (активную или неактивную)
+        subscription = Subscription.objects.filter(
+            user=user,
+            course=course_item
+        ).first()
+
+        # Если подписка существует
+        if subscription:
+            # Если подписка активна - деактивируем ее
+            if subscription.is_active:
+                subscription.is_active = False
+                subscription.save()
+                message = 'подписка удалена'
+                status_code = status.HTTP_200_OK
+            # Если подписка неактивна - активируем ее
+            else:
+                subscription.is_active = True
+                subscription.save()
+                message = 'подписка восстановлена'
+                status_code = status.HTTP_200_OK
+        # Если подписки нет - создаем новую активную
+        else:
+            Subscription.objects.create(user=user, course=course_item, is_active=True)
+            message = 'подписка добавлена'
+            status_code = status.HTTP_201_CREATED
+
+        # Возвращаем ответ в API
+        return response.Response({"message": message}, status=status_code)
+
+
+class UserSubscriptionsAPIView(generics.ListAPIView):
+    """APIView для получения всех подписок пользователя"""
+
+    permission_classes = [IsAuthenticated]
+    serializer_class = SubscriptionSerializer
+
+    def get_queryset(self):
+        return Subscription.objects.filter(
+            user=self.request.user,
+            is_active=True  # Только активные подписки
+        ).select_related('course')

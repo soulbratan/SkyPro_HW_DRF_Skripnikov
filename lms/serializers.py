@@ -1,6 +1,6 @@
 from rest_framework import serializers
 
-from lms.models import Course, Lesson
+from lms.models import Course, Lesson, Subscription
 from lms.validators import validate_youtube_only
 
 
@@ -19,7 +19,8 @@ class CourseSerializer(serializers.ModelSerializer):
 
     lessons_count = serializers.SerializerMethodField()
     lessons = LessonSerializer(many=True, read_only=True, source="lesson_set")
-    video_link = serializers.URLField(validators=[validate_youtube_only])
+    video_link = serializers.URLField(validators=[validate_youtube_only], read_only=True)
+    is_subscribed = serializers.SerializerMethodField()
 
     class Meta:
         model = Course
@@ -28,3 +29,22 @@ class CourseSerializer(serializers.ModelSerializer):
     def get_lessons_count(self, obj):
         """Метод для получения количества уроков в курсе"""
         return obj.lesson_set.count()
+
+    def get_is_subscribed(self, obj):
+        """Метод для проверки активной подписки текущего пользователя"""
+        request = self.context.get('request')
+        if request and request.user.is_authenticated:
+            return Subscription.objects.filter(
+                user=request.user,
+                course=obj,
+                is_active=True
+            ).exists()
+        return False
+
+
+class SubscriptionSerializer(serializers.ModelSerializer):
+    """Сериализатор для подписки"""
+
+    class Meta:
+        model = Subscription
+        fields = "__all__"
