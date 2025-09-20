@@ -18,20 +18,27 @@ class CourseViewSet(viewsets.ModelViewSet):
     def perform_create(self, serializer):
         serializer.save(owner=self.request.user)
 
-
     def get_permissions(self):
         if self.action == "create":
-            self.permission_classes = (IsAuthenticated, ~IsModer,)
+            self.permission_classes = (
+                IsAuthenticated,
+                ~IsModer,
+            )
         elif self.action in ["retrieve", "list", "update"]:
-            self.permission_classes = (IsAuthenticated, IsModer | IsOwner,)
+            self.permission_classes = (
+                IsAuthenticated,
+                IsModer | IsOwner,
+            )
         elif self.action == "destroy":
-            self.permission_classes = (IsAuthenticated, ~IsModer | IsOwner,)
+            self.permission_classes = (
+                IsAuthenticated,
+                ~IsModer | IsOwner,
+            )
         return super().get_permissions()
-
 
     def get_queryset(self):
         qs = super().get_queryset()
-        if not self.request.user.groups.filter(name='moders').exists():
+        if not self.request.user.groups.filter(name="moders").exists():
             qs = qs.filter(owner=self.request.user)
         return qs
 
@@ -74,7 +81,7 @@ class LessonListAPIView(generics.ListAPIView):
 
     def get_queryset(self):
         qs = super().get_queryset()
-        if not self.request.user.groups.filter(name='moders').exists():
+        if not self.request.user.groups.filter(name="moders").exists():
             qs = qs.filter(owner=self.request.user)
         return qs
 
@@ -107,20 +114,18 @@ class SubscriptionAPIView(views.APIView):
 
     def post(self, request, *args, **kwargs):
         user = request.user
-        course_id = request.data.get('course_id')
+        course_id = request.data.get("course_id")
 
         if not course_id:
             return response.Response(
-                {"error": "course_id обязателен"},
-                status=status.HTTP_400_BAD_REQUEST
+                {"error": "course_id обязателен"}, status=status.HTTP_400_BAD_REQUEST
             )
 
         course_item = get_object_or_404(Course, id=course_id)
 
         # Ищем подписку (активную или неактивную)
         subscription = Subscription.objects.filter(
-            user=user,
-            course=course_item
+            user=user, course=course_item
         ).first()
 
         # Если подписка существует
@@ -129,18 +134,18 @@ class SubscriptionAPIView(views.APIView):
             if subscription.is_active:
                 subscription.is_active = False
                 subscription.save()
-                message = 'подписка удалена'
+                message = "подписка удалена"
                 status_code = status.HTTP_200_OK
             # Если подписка неактивна - активируем ее
             else:
                 subscription.is_active = True
                 subscription.save()
-                message = 'подписка восстановлена'
+                message = "подписка восстановлена"
                 status_code = status.HTTP_200_OK
         # Если подписки нет - создаем новую активную
         else:
             Subscription.objects.create(user=user, course=course_item, is_active=True)
-            message = 'подписка добавлена'
+            message = "подписка добавлена"
             status_code = status.HTTP_201_CREATED
 
         # Возвращаем ответ в API
@@ -155,6 +160,5 @@ class UserSubscriptionsAPIView(generics.ListAPIView):
 
     def get_queryset(self):
         return Subscription.objects.filter(
-            user=self.request.user,
-            is_active=True  # Только активные подписки
-        ).select_related('course')
+            user=self.request.user, is_active=True  # Только активные подписки
+        ).select_related("course")

@@ -91,22 +91,17 @@ class Subscription(models.Model):
         verbose_name="Курс",
     )
     created_at = models.DateTimeField(
-        auto_now_add=True,
-        verbose_name="Дата создания подписки"
+        auto_now_add=True, verbose_name="Дата создания подписки"
     )
     updated_at = models.DateTimeField(
-        auto_now=True,
-        verbose_name="Дата обновления подписки"
+        auto_now=True, verbose_name="Дата обновления подписки"
     )
-    is_active = models.BooleanField(
-        default=True,
-        verbose_name="Подписка активна"
-    )
+    is_active = models.BooleanField(default=True, verbose_name="Подписка активна")
 
     class Meta:
         verbose_name = "Подписка"
         verbose_name_plural = "Подписки"
-        unique_together = ['user', 'course']  # Уникальная пара пользователь-курс
+        unique_together = ["user", "course"]  # Уникальная пара пользователь-курс
 
     def __str__(self):
         return f"{self.user} - {self.course} ({'активна' if self.is_active else 'неактивна'})"
