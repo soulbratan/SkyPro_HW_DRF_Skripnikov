@@ -9,15 +9,21 @@ from users.serializers import PaymentSerializer, PublicUserSerializer, UserSeria
 
 
 class PaymentCreateAPIView(generics.CreateAPIView):
+    """ Создание платежа """
+
     serializer_class = PaymentSerializer
 
 
 class PaymentRetrieveAPIView(generics.RetrieveAPIView):
+    """ Просмотр платежа """
+
     serializer_class = PaymentSerializer
     queryset = Payment.objects.all()
 
 
 class PaymentListAPIView(generics.ListAPIView):
+    """ Список платежей """
+
     serializer_class = PaymentSerializer
     queryset = Payment.objects.all()
     filter_backends = (filters.DjangoFilterBackend, OrderingFilter)
@@ -30,6 +36,8 @@ class PaymentListAPIView(generics.ListAPIView):
 
 
 class UserCreateAPIView(generics.CreateAPIView):
+    """ Создание пользователя """
+
     serializer_class = UserSerializer
     queryset = User.objects.all()
     permission_classes = (AllowAny,)
@@ -41,6 +49,8 @@ class UserCreateAPIView(generics.CreateAPIView):
 
 
 class UserRetrieveAPIView(generics.RetrieveAPIView):
+    """ Просмотр пользователя """
+
     queryset = User.objects.all()
     permission_classes = (IsAuthenticated, IsOwnerOrReadOnly)
 
@@ -51,17 +61,23 @@ class UserRetrieveAPIView(generics.RetrieveAPIView):
 
 
 class UserListAPIView(generics.ListAPIView):
+    """ Просмотр всех пользователей """
+
     serializer_class = PublicUserSerializer
     queryset = User.objects.all()
     permission_classes = (IsAuthenticated,)
 
 
 class UserUpdateAPIView(generics.UpdateAPIView):
+    """ Изменение пользователя """
+
     serializer_class = UserSerializer
     queryset = User.objects.all()
     permission_classes = (IsAuthenticated, IsOwnerOrReadOnly)
 
 
 class UserDestroyAPIView(generics.DestroyAPIView):
+    """ Удаление пользователя """
+
     queryset = User.objects.all()
     permission_classes = (IsAuthenticated, IsOwnerOrReadOnly)

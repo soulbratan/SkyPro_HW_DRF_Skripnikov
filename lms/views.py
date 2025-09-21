@@ -9,7 +9,7 @@ from users.permissions import IsModer, IsOwner
 
 
 class CourseViewSet(viewsets.ModelViewSet):
-    """Контроллер для модели курса"""
+    """Контроллер для работы с моделью курса"""
 
     queryset = Course.objects.all()
     serializer_class = CourseSerializer
