@@ -18,7 +18,11 @@ def create_or_get_stripe_product(course):
         product = stripe.Product.create(
             id=product_id,
             name=course.title,
-            description=course.description[:500] if course.description else f"Курс {course.title}",
+            description=(
+                course.description[:500]
+                if course.description
+                else f"Курс {course.title}"
+            ),
         )
 
     return product
@@ -30,7 +34,7 @@ def create_stripe_price(product, amount):
     price = stripe.Price.create(
         product=product.id,
         unit_amount=int(amount * 100),  # Stripe требует сумму в копейках
-        currency='rub',
+        currency="rub",
     )
 
     return price
@@ -53,20 +57,53 @@ def create_stripe_session(payment):
 
         # Создаем сессию с использованием product и price
         session = stripe.checkout.Session.create(
-            payment_method_types=['card'],
-            line_items=[{
-                'price': price.id,
-                'quantity': 1,
-            }],
-            mode='payment',
-            success_url=f'{settings.FRONTEND_URL}/payment/success/?session_id={{CHECKOUT_SESSION_ID}}',
-            cancel_url=f'{settings.FRONTEND_URL}/payment/cancel/',
+            payment_method_types=["card"],
+            line_items=[
+                {
+                    "price": price.id,
+                    "quantity": 1,
+                }
+            ],
+            mode="payment",
+            success_url=f"{settings.FRONTEND_URL}/payment/success/?session_id={{CHECKOUT_SESSION_ID}}",
+            cancel_url=f"{settings.FRONTEND_URL}/payment/cancel/",
             metadata={
-                'payment_id': payment.id,
-                'user_id': payment.user.id if payment.user else None,
-                'course_id': course.id if course else None,
-                'lesson_id': payment.paid_lesson.id if payment.paid_lesson else None,
-            }
+                "payment_id": payment.id,
+                "user_id": payment.user.id if payment.user else None,
+                "course_id": course.id if course else None,
+                "lesson_id": payment.paid_lesson.id if payment.paid_lesson else None,
+            },
         )
 
         return session
+
+
+def get_payment_status(session_id):
+    """Получает статус платежа из Stripe по ID сессии"""
+
+    try:
+        session = stripe.checkout.Session.retrieve(session_id)
+        return session.payment_status  # 'paid', 'unpaid', 'no_payment_required'
+    except stripe.error.InvalidRequestError:
+        return None
+
+
+def get_session_status(session_id):
+    """Получает полную информацию о сессии"""
+
+    try:
+        session = stripe.checkout.Session.retrieve(session_id)
+        return {
+            "session_id": session.id,
+            "payment_status": session.payment_status,
+            "status": session.status,  # 'complete', 'expired', 'open'
+            "amount_total": session.amount_total / 100 if session.amount_total else 0,
+            "currency": session.currency,
+            "customer_email": (
+                session.customer_details.email if session.customer_details else None
+            ),
+            "created": session.created,
+            "expires_at": session.expires_at,
+        }
+    except stripe.error.InvalidRequestError as e:
+        return {"error": str(e)}

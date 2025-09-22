@@ -55,12 +55,6 @@ class Payment(models.Model):
         ("transfer", "Перевод на счет"),
     ]
 
-    PAYMENT_STATUS_CHOICES = [
-        ('pending', 'Ожидает оплаты'),
-        ('succeeded', 'Оплачено'),
-        ('canceled', 'Отменено'),
-    ]
-
     user = models.ForeignKey(
         User,
         on_delete=models.CASCADE,
@@ -96,22 +90,10 @@ class Payment(models.Model):
     )
 
     stripe_session_id = models.CharField(
-        max_length=255,
-        verbose_name="ID сессии Stripe",
-        blank=True,
-        null=True
+        max_length=255, verbose_name="ID сессии Stripe", blank=True, null=True
     )
     stripe_payment_url = models.URLField(
-        max_length=500,
-        verbose_name="Ссылка на оплату Stripe",
-        blank=True,
-        null=True
-    )
-    payment_status = models.CharField(
-        max_length=20,
-        choices=PAYMENT_STATUS_CHOICES,
-        default='pending',
-        verbose_name="Статус платежа"
+        max_length=500, verbose_name="Ссылка на оплату Stripe", blank=True, null=True
     )
 
     class Meta:

@@ -24,7 +24,7 @@ class Course(models.Model):
         decimal_places=2,
         default=500.00,  # Цена по умолчанию 500
         verbose_name="Цена курса",
-        help_text="Укажите цену курса"
+        help_text="Укажите цену курса",
     )
     owner = models.ForeignKey(
         settings.AUTH_USER_MODEL,

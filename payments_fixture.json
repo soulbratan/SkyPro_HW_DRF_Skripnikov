@@ -60,3 +60,70 @@
     }
 }
 ]
+
+
+[{'id': 6, 'payment_date': '2025-09-22T11:23:50.165533Z
+', 'amount': '455.00', 'payment_method': 'transfer', 's
+tripe_session_id': 'cs_test_a14jaSz35FMJLJVxY3HYv5Z1BVX
+xfrtYAvhKpyq5onvqcJoMMl7Rc6fBLe', 'stripe_payment_url':
+ 'https://checkout.stripe.com/c/pay/cs_test_a14jaSz35FM
+JLJVxY3HYv5Z1BVXxfrtYAvhKpyq5onvqcJoMMl7Rc6fBLe#fidkdWx
+OYHwnPyd1blpxYHZxWjA0VjxqcklXZE1iSXRvcXV3X1VkZERKSEdNYV
+JxcmtvfW9GdzVHUHBcUzZgTkF%2FTkdScTZuUHxJSHx1MWdSPGZqYWB
+uZF9UQzVnM2ptMmlSdFdpVm5NSWlsNTVfXDA9SmZgSCcpJ2N3amhWYH
+dzYHcnP3F3cGApJ2dkZm5id2pwa2FGamlqdyc%2FJyZjY2NjY2MnKSd
+pZHxqcHFRfHVgJz8ndmxrYmlgWmxxYGgnKSdga2RnaWBVaWRmYG1qaW
+Fgd3YnP3F3cGB4JSUl', 'user': 1, 'paid_course': 7, 'paid
+_lesson': None}, {'id': 5, 'payment_date': '2025-09-22T
+10:57:47.643810Z', 'amount': '455.00', 'payment_method'
+: 'transfer', 'stripe_session_id': 'cs_test_a1gcOa2BhKJ
+uDAkv7imrKFxlDLx4x7YE46um2NUJO5EpruaLiqkIk15M28', 'stri
+pe_payment_url': 'https://checkout.stripe.com/c/pay/cs_
+test_a1gcOa2BhKJuDAkv7imrKFxlDLx4x7YE46um2NUJO5EpruaLiq
+kIk15M28#fidkdWxOYHwnPyd1blpxYHZxWjA0VjxqcklXZE1iSXRvcX
+V3X1VkZERKSEdNYVJxcmtvfW9GdzVHUHBcUzZgTkF%2FTkdScTZuUHx
+JSHx1MWdSPGZqYWBuZF9UQzVnM2ptMmlSdFdpVm5NSWlsNTVfXDA9Sm
+ZgSCcpJ2N3amhWYHdzYHcnP3F3cGApJ2dkZm5id2pwa2FGamlqdyc%2
+FJyZjY2NjY2MnKSdpZHxqcHFRfHVgJz8ndmxrYmlgWmxxYGgnKSdga2
+RnaWBVaWRmYG1qaWFgd3YnP3F3cGB4JSUl', 'user': 1, 'paid_c
+ourse': 7, 'paid_lesson': None}, {'id': 4, 'payment_dat
+e': '2025-09-22T10:30:29.616963Z', 'amount': '500.00',
+'payment_method': 'transfer', 'stripe_session_id': 'cs_
+test_a1tFyYaw75IojlP0bJwhsOL38jtj9qKYW4W03X1N07lohwrzLN
+OiJYA9xZ', 'stripe_payment_url': 'https://checkout.stri
+pe.com/c/pay/cs_test_a1tFyYaw75IojlP0bJwhsOL38jtj9qKYW4
+W03X1N07lohwrzLNOiJYA9xZ#fidkdWxOYHwnPyd1blpxYHZxWjA0Vj
+xqcklXZE1iSXRvcXV3X1VkZERKSEdNYVJxcmtvfW9GdzVHUHBcUzZgT
+kF%2FTkdScTZuUHxJSHx1MWdSPGZqYWBuZF9UQzVnM2ptMmlSdFdpVm
+5NSWlsNTVfXDA9SmZgSCcpJ2N3amhWYHdzYHcnP3F3cGApJ2dkZm5id
+2pwa2FGamlqdyc%2FJyZjY2NjY2MnKSdpZHxqcHFRfHVgJz8ndmxrYm
+lgWmxxYGgnKSdga2RnaWBVaWRmYG1qaWFgd3YnP3F3cGB4JSUl', 'u
+ser': 1, 'paid_course': 5, 'paid_lesson': None}, {'id':
+ 3, 'payment_date': '2025-09-22T10:05:16.617567Z', 'amo
+unt': '800.00', 'payment_method': 'transfer', 'stripe_s
+ession_id': 'cs_test_a1ivBnIKDfjfNuPAK2to6aALjK1yVSlSAO
+03zNS1oOHrrkrRPImi9LGnKM', 'stripe_payment_url': 'https
+://checkout.stripe.com/c/pay/cs_test_a1ivBnIKDfjfNuPAK2
+to6aALjK1yVSlSAO03zNS1oOHrrkrRPImi9LGnKM#fidkdWxOYHwnPy
+d1blpxYHZxWjA0VjxqcklXZE1iSXRvcXV3X1VkZERKSEdNYVJxcmtvf
+W9GdzVHUHBcUzZgTkF%2FTkdScTZuUHxJSHx1MWdSPGZqYWBuZF9UQz
+VnM2ptMmlSdFdpVm5NSWlsNTVfXDA9SmZgSCcpJ2N3amhWYHdzYHcnP
+3F3cGApJ2dkZm5id2pwa2FGamlqdyc%2FJyZjY2NjY2MnKSdpZHxqcH
+FRfHVgJz8ndmxrYmlgWmxxYGgnKSdga2RnaWBVaWRmYG1qaWFgd3YnP
+3F3cGB4JSUl', 'user': 1, 'paid_course': 6, 'paid_lesson
+': None}, {'id': 2, 'payment_date': '2025-09-22T10:03:3
+8.471386Z', 'amount': '800.00', 'payment_method': 'tran
+sfer', 'stripe_session_id': 'cs_test_a1deHkOmTDF43b8V2p
+GefxLN2yDXeH2tguEVrWmdDKJWWlmyxojkbhVzze', 'stripe_paym
+ent_url': 'https://checkout.stripe.com/c/pay/cs_test_a1
+deHkOmTDF43b8V2pGefxLN2yDXeH2tguEVrWmdDKJWWlmyxojkbhVzz
+e#fidkdWxOYHwnPyd1blpxYHZxWjA0VjxqcklXZE1iSXRvcXV3X1VkZ
+ERKSEdNYVJxcmtvfW9GdzVHUHBcUzZgTkF%2FTkdScTZuUHxJSHx1MW
+dSPGZqYWBuZF9UQzVnM2ptMmlSdFdpVm5NSWlsNTVfXDA9SmZgSCcpJ
+2N3amhWYHdzYHcnP3F3cGApJ2dkZm5id2pwa2FGamlqdyc%2FJyZjY2
+NjY2MnKSdpZHxqcHFRfHVgJz8ndmxrYmlgWmxxYGgnKSdga2RnaWBVa
+WRmYG1qaWFgd3YnP3F3cGB4JSUl', 'user': 1, 'paid_course':
+ 6, 'paid_lesson': None}, {'id': 1, 'payment_date': '20
+25-09-22T10:02:06.731108Z', 'amount': '800.00', 'paymen
+t_method': 'transfer', 'stripe_session_id': None, 'stri
+pe_payment_url': None, 'user': 1, 'paid_course': 6, 'paid_lesson': None}]
