@@ -19,6 +19,13 @@ class Course(models.Model):
         verbose_name="Описание курса",
         help_text="Введите описание",
     )
+    price = models.DecimalField(
+        max_digits=10,
+        decimal_places=2,
+        default=500.00,  # Цена по умолчанию 500
+        verbose_name="Цена курса",
+        help_text="Укажите цену курса"
+    )
     owner = models.ForeignKey(
         settings.AUTH_USER_MODEL,
         on_delete=models.SET_NULL,

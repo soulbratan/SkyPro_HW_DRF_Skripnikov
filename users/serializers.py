@@ -9,6 +9,7 @@ class PaymentSerializer(ModelSerializer):
     class Meta:
         model = Payment
         fields = "__all__"
+        read_only_fields = ('stripe_session_id', 'stripe_payment_url', 'payment_status', 'payment_date')
 
 
 class UserSerializer(ModelSerializer):
