@@ -33,7 +33,7 @@ def create_stripe_price(product, amount):
 
     price = stripe.Price.create(
         product=product.id,
-        unit_amount=int(amount * 100),  # Stripe требует сумму в копейках
+        unit_amount=int(amount * 100),
         currency="rub",
     )
 
@@ -46,7 +46,6 @@ def create_stripe_session(payment):
     course = payment.paid_course
 
     if not course:
-        # Если оплачивается не курс, а урок - используем общий подход
         product_name = "Урок"
         if payment.paid_lesson:
             product_name = payment.paid_lesson.title
@@ -83,7 +82,7 @@ def get_payment_status(session_id):
 
     try:
         session = stripe.checkout.Session.retrieve(session_id)
-        return session.payment_status  # 'paid', 'unpaid', 'no_payment_required'
+        return session.payment_status
     except stripe.error.InvalidRequestError:
         return None
 
