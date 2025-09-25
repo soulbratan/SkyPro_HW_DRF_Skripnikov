@@ -1,7 +1,7 @@
 from django.shortcuts import get_object_or_404
 from rest_framework import generics, response, status, views, viewsets
 from rest_framework.permissions import IsAuthenticated
-from lms.tasks import add
+from lms.tasks import send_course_update_notification
 from lms.models import Course, Lesson, Subscription
 from lms.paginations import CustomPagination
 from lms.serializers import CourseSerializer, LessonSerializer, SubscriptionSerializer
@@ -17,6 +17,18 @@ class CourseViewSet(viewsets.ModelViewSet):
 
     def perform_create(self, serializer):
         serializer.save(owner=self.request.user)
+
+    def update(self, request, *args, **kwargs):
+        instance = self.get_object()
+        response = super().update(request, *args, **kwargs)
+
+        if response.status_code == status.HTTP_200_OK:
+            send_course_update_notification.delay(instance.id)
+
+        return response
+
+    def partial_update(self, request, *args, **kwargs):
+        return self.update(request, *args, **kwargs)
 
     def get_permissions(self):
         if self.action == "create":
@@ -141,7 +153,6 @@ class SubscriptionAPIView(views.APIView):
                 subscription.is_active = True
                 subscription.save()
                 message = "подписка восстановлена"
-                add.delay()
                 status_code = status.HTTP_200_OK
         # Если подписки нет - создаем новую активную
         else:
