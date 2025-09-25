@@ -1,8 +1,7 @@
 from django.contrib import admin
 
+from lms.models import Course, Subscription
 from users.models import User
-
-from lms.models import Subscription, Course
 
 
 @admin.register(User)

@@ -1,10 +1,12 @@
+from datetime import timedelta
+
 from celery import shared_task
 from django.conf import settings
-from django.core.mail import send_mail
-from lms.models import Course, Subscription
-from django.utils import timezone
-from datetime import timedelta
 from django.contrib.auth import get_user_model
+from django.core.mail import send_mail
+from django.utils import timezone
+
+from lms.models import Course, Subscription
 
 User = get_user_model()
 
@@ -17,14 +19,13 @@ def send_course_update_notification(course_id):
     try:
         course = Course.objects.get(id=course_id)
         active_subscriptions = Subscription.objects.filter(
-            course=course,
-            is_active=True
-        ).select_related('user')
+            course=course, is_active=True
+        ).select_related("user")
 
         if not active_subscriptions:
             return f"No active subscriptions for course {course.title}"
 
-        subject = f'Обновление материалов курса'
+        subject = f"Обновление материалов курса"
         message = f'Материалы курса "{course.title}" обновлены.'
         emails_sent = 0
         for subscription in active_subscriptions:
@@ -38,7 +39,9 @@ def send_course_update_notification(course_id):
             )
             emails_sent += 1
 
-        return f"Successfully sent {emails_sent} notifications for course {course.title}"
+        return (
+            f"Successfully sent {emails_sent} notifications for course {course.title}"
+        )
 
     except Course.DoesNotExist:
         return f"Course with id {course_id} does not exist"
@@ -53,10 +56,7 @@ def block_inactive_users():
     """
     try:
         month_ago = timezone.now() - timedelta(days=30)
-        inactive_users = User.objects.filter(
-            last_login__lt=month_ago,
-            is_active=True
-        )
+        inactive_users = User.objects.filter(last_login__lt=month_ago, is_active=True)
 
         count = inactive_users.count()
         inactive_users.update(is_active=False)

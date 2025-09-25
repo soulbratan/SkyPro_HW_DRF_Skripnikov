@@ -1,10 +1,11 @@
 from django.shortcuts import get_object_or_404
 from rest_framework import generics, response, status, views, viewsets
 from rest_framework.permissions import IsAuthenticated
-from lms.tasks import send_course_update_notification
+
 from lms.models import Course, Lesson, Subscription
 from lms.paginations import CustomPagination
 from lms.serializers import CourseSerializer, LessonSerializer, SubscriptionSerializer
+from lms.tasks import send_course_update_notification
 from users.permissions import IsModer, IsOwner
 
 

@@ -30,7 +30,7 @@ class CourseSerializer(serializers.ModelSerializer):
     class Meta:
         model = Course
         fields = "__all__"
-        read_only_fields = ('last_updated',)
+        read_only_fields = ("last_updated",)
 
     def get_lessons_count(self, obj):
         """Метод для получения количества уроков в курсе"""

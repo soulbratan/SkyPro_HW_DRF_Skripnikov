@@ -1,6 +1,7 @@
 import os
 from datetime import timedelta
 from pathlib import Path
+
 from celery.schedules import crontab
 from django.conf.global_settings import SERVER_EMAIL
 from dotenv import load_dotenv
@@ -41,7 +42,7 @@ INSTALLED_APPS = [
     "django_filters",
     "rest_framework_simplejwt",
     "drf_yasg",
-    'django_celery_beat',
+    "django_celery_beat",
 ]
 
 
@@ -155,8 +156,8 @@ CELERY_BROKER_URL = "redis://localhost:6379/0"
 CELERY_RESULT_BACKEND = "redis://localhost:6379/0"
 
 CELERY_BEAT_SCHEDULE = {
-    'block-inactive-users-daily': {
-        'task': 'users.tasks.block_inactive_users',
-        'schedule': crontab(hour=1, minute=0),
+    "block-inactive-users-daily": {
+        "task": "users.tasks.block_inactive_users",
+        "schedule": crontab(hour=1, minute=0),
     },
 }
