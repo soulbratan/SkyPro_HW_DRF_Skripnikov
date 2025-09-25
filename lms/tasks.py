@@ -1,8 +1,12 @@
 from celery import shared_task
 from django.conf import settings
 from django.core.mail import send_mail
-
 from lms.models import Course, Subscription
+from django.utils import timezone
+from datetime import timedelta
+from django.contrib.auth import get_user_model
+
+User = get_user_model()
 
 
 @shared_task
@@ -20,15 +24,11 @@ def send_course_update_notification(course_id):
         if not active_subscriptions:
             return f"No active subscriptions for course {course.title}"
 
-        # Текстовое сообщение
         subject = f'Обновление материалов курса'
         message = f'Материалы курса "{course.title}" обновлены.'
-
         emails_sent = 0
         for subscription in active_subscriptions:
             user = subscription.user
-
-            # Отправляем простое текстовое письмо
             send_mail(
                 subject=subject,
                 message=message,
@@ -44,3 +44,23 @@ def send_course_update_notification(course_id):
         return f"Course with id {course_id} does not exist"
     except Exception as e:
         return f"Error sending notifications: {str(e)}"
+
+
+@shared_task
+def block_inactive_users():
+    """
+    Задача для блокировки пользователей, которые не заходили более месяца
+    """
+    try:
+        month_ago = timezone.now() - timedelta(days=30)
+        inactive_users = User.objects.filter(
+            last_login__lt=month_ago,
+            is_active=True
+        )
+
+        count = inactive_users.count()
+        inactive_users.update(is_active=False)
+        return f"Заблокировано {count} неактивных пользователей"
+
+    except Exception as e:
+        return f"Ошибка при блокировке пользователей: {str(e)}"
