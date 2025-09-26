@@ -19,17 +19,9 @@ class CourseViewSet(viewsets.ModelViewSet):
     def perform_create(self, serializer):
         serializer.save(owner=self.request.user)
 
-    def update(self, request, *args, **kwargs):
-        instance = self.get_object()
-        response = super().update(request, *args, **kwargs)
-
-        if response.status_code == status.HTTP_200_OK:
-            send_course_update_notification.delay(instance.id)
-
-        return response
-
-    def partial_update(self, request, *args, **kwargs):
-        return self.update(request, *args, **kwargs)
+    def perform_update(self, serializer):
+        instance = serializer.save()
+        send_course_update_notification.delay(instance.id)
 
     def get_permissions(self):
         if self.action == "create":
