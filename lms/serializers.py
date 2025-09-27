@@ -25,10 +25,12 @@ class CourseSerializer(serializers.ModelSerializer):
         validators=[validate_youtube_only], read_only=True
     )
     is_subscribed = serializers.SerializerMethodField()
+    last_updated = serializers.DateTimeField(read_only=True)
 
     class Meta:
         model = Course
         fields = "__all__"
+        read_only_fields = ("last_updated",)
 
     def get_lessons_count(self, obj):
         """Метод для получения количества уроков в курсе"""

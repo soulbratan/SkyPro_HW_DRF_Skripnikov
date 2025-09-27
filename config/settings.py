@@ -2,13 +2,14 @@ import os
 from datetime import timedelta
 from pathlib import Path
 
+from celery.schedules import crontab
+from django.conf.global_settings import SERVER_EMAIL
 from dotenv import load_dotenv
 
 BASE_DIR = Path(__file__).resolve().parent.parent
 
 load_dotenv()
 
-# SECRET_KEY = "django-insecure-r*a9mt1l1hhl_6(%wi)b39tqb@1h)1(9jd86&khrs_z$c2)@r5"
 
 SECRET_KEY = os.getenv("SECRET_KEY")
 
@@ -25,6 +26,7 @@ EMAIL_USE_SSL = True
 EMAIL_HOST_USER = os.getenv("EMAIL_HOST_USER")
 EMAIL_HOST_PASSWORD = os.getenv("EMAIL_HOST_PASSWORD")
 DEFAULT_FROM_EMAIL = EMAIL_HOST_USER
+SERVER_EMAIL = EMAIL_HOST_USER
 
 
 INSTALLED_APPS = [
@@ -40,6 +42,7 @@ INSTALLED_APPS = [
     "django_filters",
     "rest_framework_simplejwt",
     "drf_yasg",
+    "django_celery_beat",
 ]
 
 
@@ -143,3 +146,21 @@ SIMPLE_JWT = {
 STRIPE_SECRET_KEY = os.getenv("STRIPE_SECRET_KEY")
 STRIPE_PUBLIC_KEY = os.getenv("STRIPE_PUBLIC_KEY")
 FRONTEND_URL = "http://localhost:8000"
+
+CELERY_BEAT_SCHEDULER = "django_celery_beat.schedulers:DatabaseScheduler"
+CELERY_TIMEZONE = TIME_ZONE
+CELERY_TASK_TRACK_STARTED = True
+CELERY_TASK_TIME_LIMIT = 30 * 60
+
+REDIS_HOST = os.getenv('REDIS_HOST')
+REDIS_PORT = os.getenv('REDIS_PORT')
+
+CELERY_BROKER_URL = f"redis://{REDIS_HOST}:{REDIS_PORT}/0"
+CELERY_RESULT_BACKEND = f"redis://{REDIS_HOST}:{REDIS_PORT}/0"
+
+CELERY_BEAT_SCHEDULE = {
+    "block-inactive-users-daily": {
+        "task": "users.tasks.block_inactive_users",
+        "schedule": crontab(hour=1, minute=0),
+    },
+}

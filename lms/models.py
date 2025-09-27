@@ -34,6 +34,11 @@ class Course(models.Model):
         null=True,
         help_text="Укажите владельца",
     )
+    last_updated = models.DateTimeField(
+        auto_now=True,  # Автоматически обновляется при каждом сохранении
+        verbose_name="Время последнего обновления",
+        help_text="Время последнего обновления курса",
+    )
 
     class Meta:
         verbose_name = "Курс"

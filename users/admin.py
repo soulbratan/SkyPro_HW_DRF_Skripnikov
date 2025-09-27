@@ -1,5 +1,6 @@
 from django.contrib import admin
 
+from lms.models import Course, Subscription
 from users.models import User
 
 
@@ -9,3 +10,7 @@ class UserAdmin(admin.ModelAdmin):
         "id",
         "email",
     )
+
+
+admin.site.register(Subscription)
+admin.site.register(Course)
