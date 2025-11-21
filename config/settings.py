@@ -14,7 +14,7 @@ load_dotenv()
 SECRET_KEY = os.getenv("SECRET_KEY")
 
 # DEBUG = True if os.getenv("DEBUG") == "True" else False
-DEBUG = True
+DEBUG = False
 ALLOWED_HOSTS = ["*"]
 
 
