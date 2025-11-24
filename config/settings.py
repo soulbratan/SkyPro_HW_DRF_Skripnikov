@@ -13,8 +13,8 @@ load_dotenv()
 
 SECRET_KEY = os.getenv("SECRET_KEY")
 
-# DEBUG = True if os.getenv("DEBUG") == "True" else False
-DEBUG = False
+DEBUG = True if os.getenv("DEBUG") == "True" else False
+# DEBUG = False
 ALLOWED_HOSTS = ["*"]
 
 
@@ -127,6 +127,7 @@ USE_TZ = True
 STATIC_URL = "static/"
 
 STATICFILES_DIRS = (BASE_DIR / "static",)
+STATIC_ROOT = os.path.join(BASE_DIR, "staticfiles")
 
 MEDIA_URL = "media/"
 
@@ -163,4 +164,12 @@ CELERY_BEAT_SCHEDULE = {
         "task": "users.tasks.block_inactive_users",
         "schedule": crontab(hour=0, minute=1,),
     },
+}
+
+
+CACHES = {
+    "default": {
+        "BACKEND": "django.core.cache.backends.redis.RedisCache",
+        "LOCATION": "redis://redis:6379/1",
+    }
 }
