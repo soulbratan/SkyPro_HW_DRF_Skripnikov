@@ -46,9 +46,9 @@ def create_stripe_session(payment):
     course = payment.paid_course
 
     if not course:
-        product_name = "Урок"
+        product_name = "Урок"   # noqa
         if payment.paid_lesson:
-            product_name = payment.paid_lesson.title
+            product_name = payment.paid_lesson.title    # noqa
     else:
         # Для курса создаем/получаем продукт в Stripe
         product = create_or_get_stripe_product(course)

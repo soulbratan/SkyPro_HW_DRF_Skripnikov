@@ -145,9 +145,9 @@ class CourseTestCase(APITestCase):
     def test_course_list(self):
         url = reverse("lms:course-list")
         response = self.client.get(url)
-        data = response.json()
+        data = response.json()  # noqa
 
-        result = {
+        result = {  # noqa
             "count": 1,
             "next": None,
             "previous": None,

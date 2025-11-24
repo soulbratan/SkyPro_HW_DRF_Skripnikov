@@ -19,7 +19,7 @@ def send_course_update_notification(course_id):
         if not active_subscriptions:
             return f"No active subscriptions for course {course.title}"
 
-        subject = f"Обновление материалов курса"
+        subject = "Обновление материалов курса"
         message = f'Материалы курса "{course.title}" обновлены.'
         emails_sent = 0
         for subscription in active_subscriptions:
