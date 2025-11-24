@@ -38,16 +38,17 @@ jobs:
       - name: Install dependencies
         run: |
           python -m pip install --upgrade pip
+          poetry shell
           pip install poetry
           poetry install --no-root
           poetry update
-          poetry shell
+          
 
       - name: Run migrations
         run: python manage.py migrate
 
       - name: Run tests
-        run: python manage.py test
+        run: poetry python manage.py test
 
   build:
     runs-on: ubuntu-latest
