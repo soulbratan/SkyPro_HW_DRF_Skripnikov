@@ -40,6 +40,8 @@ jobs:
           python -m pip install --upgrade pip
           pip install poetry
           poetry install --no-root
+          poetry update
+          poetry shell
 
       - name: Run migrations
         run: python manage.py migrate
