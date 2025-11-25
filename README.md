@@ -48,6 +48,12 @@ poetry update
 - Для просмотра контейнеров используй команду ```docker-compose ps```, а для просмотра логов ```docker-compose logs```.
 - Чтобы проверить работоспособность сервисов, пройди в документацию по адресу [**Redoc документация**](http://127.0.0.1:8000/redoc/), и протестируй запросы в Postman.
 
+## Деплой:
+- Создаём и настраиваем виртуальный сервер. Используем ОС Ubuntu. Обновляем пакеты (1. sudo apt update 2. sudo apt upgrade).
+- Устанавливаем Docker ([**Инструкция с оф сайта**](https://docs.docker.com/engine/install/ubuntu/#install-using-the-repository))
+- Настраиваем файрвол (sudo ufw enable). Открываем порты (1.sudo ufw allow 80/tcp 2.sudo ufw allow 443/tcp 3.sudo ufw allow 22/tcp).
+- Для деплоя настраиваем .env файл в соответствии с шаблоном env_example. Настраиваем git-hub secrets в соответствии с ci.yml. Коммитим, и пушим. Workflows всё сделает за вас.
+
 ## Документация:
 
 [**Репозиторий на GitHub**](https://github.com/soulbratan/SkyPro_HW_DRF_Skripnikov)
