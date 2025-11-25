@@ -101,4 +101,4 @@ jobs:
             sudo docker stop app || true
             sudo docker rm app || true
             sudo docker run -d --name app -p 80:8000 ${{ secrets.DOCKER_HUB_USERNAME }}/app:${{ github.sha }}
-            EOF
+          EOF
